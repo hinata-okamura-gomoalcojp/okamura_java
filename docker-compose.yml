@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    ports:
+     - "8099:8099"
+  mysql:
+    image: mysql:5.7.16
+    restart: always #追記　常に再起動される
+    ports:
+      - "3310:3310"
+    environment:
+      - MYSQL_ROOT_PASSWORD= hinata0404
+  frontend:
+    build: 
+        context: ./frontend
+        dockerfile: Dockerfile
+    ports:
+      - "8078:80"
+    volumes:  # ホストOSとDockerコンテナ間でのディレクトリを共有し、リアルタイムで反映できるようにする
+      - ./frontend:/usr/share/nginx/html
